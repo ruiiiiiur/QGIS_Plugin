@@ -245,12 +245,11 @@ class SaveAttributes:
             list_of_topics.append(topic[1])
         conn.commit()
 
-
         # Clear the contents of the comboBox from previous runs
         self.dlg.comboBox_3.clear()
         self.dlg.listWidget.clear()
         self.dlg.listWidget_3.clear()
-        #self.dlg.comboBox_4.clear()
+        # self.dlg.comboBox_4.clear()
         # Populate the comboBox with names of all the loaded layers
         #  self.dlg.comboBox.addItems([layer.name() for layer in layers])
         self.dlg.comboBox_3.addItems(list_of_topics)
@@ -293,10 +292,8 @@ class SaveAttributes:
             warning_text = "Please select a development layer! "
             self.dlg.lineEdit_8.setText(warning_text)
 
-
     def list_all_related_layers(self):
         topic_name = str(self.dlg.comboBox_3.currentText())
-
         # connect to the database
         conn = psycopg2.connect(
                 host="localhost",
@@ -321,18 +318,16 @@ class SaveAttributes:
         conn.commit()
 
         # Clear the contents of the comboBox from previous runs
-        #self.dlg.comboBox_4.clear()
+        # self.dlg.comboBox_4.clear()
 
         # Populate the comboBox with names of all the loaded layers
         #  self.dlg.comboBox.addItems([layer.name() for layer in layers])
-        #self.dlg.comboBox_4.addItems(list_of_layers)
+        # self.dlg.comboBox_4.addItems(list_of_layers)
         self.dlg.listWidget.clear()
         for i in list_of_layers:
             self.dlg.listWidget.addItem(i)
 
-
     def load_site_shp(self):
-
         site_name = str(self.dlg.comboBox_2.currentText())
         # get all layers
         layers = QgsProject.instance().mapLayers()
@@ -340,7 +335,7 @@ class SaveAttributes:
         for layer in layers.values():
             list_of_layers.append(layer.name())
         if site_name not in list_of_layers:
-            #connect to db
+            # connect to db
             uri = QgsDataSourceUri()
             # set host name, port, database name, username and password
             uri.setConnection("localhost", "5432", "postgis_dt", "postgres", "Jr19951123")
@@ -368,8 +363,8 @@ class SaveAttributes:
             canvas.setExtent(extent)
             self.iface.mapCanvas().refresh()
             # add site to the comBoBox in Tab 3
-            AllItems = [self.dlg.comboBox_5.itemText(i) for i in range(self.dlg.comboBox_5.count())]
-            if site_name not in AllItems:
+            all_items = [self.dlg.comboBox_5.itemText(i) for i in range(self.dlg.comboBox_5.count())]
+            if site_name not in all_items:
                 list_of_sites_loaded = []
                 list_of_sites_loaded.append(site_name)
                 # list_of_sites_loaded_no_du = list(dict.fromkeys(list_of_sites_loaded))
@@ -377,7 +372,7 @@ class SaveAttributes:
 
     def load_env_shp(self):
         try:
-            #layer_name = str(self.dlg.comboBox_4.currentText())
+            # layer_name = str(self.dlg.comboBox_4.currentText())
             layer_name = str(self.dlg.listWidget.currentItem().text())
             # get all layers
             layers = QgsProject.instance().mapLayers()
@@ -411,17 +406,15 @@ class SaveAttributes:
                 canvas.setExtent(extent)
                 self.iface.mapCanvas().refresh()
                 self.dlg.textBrowser_2.append(layer_name + " already exists!")
-                AllItems = [self.dlg.comboBox_4.itemText(i) for i in range(self.dlg.comboBox_4.count())]
-                if layer_name not in AllItems:
+                all_items = [self.dlg.comboBox_4.itemText(i) for i in range(self.dlg.comboBox_4.count())]
+                if layer_name not in all_items:
                     list_of_sites_loaded = []
                     list_of_sites_loaded.append(layer_name)
                     # list_of_sites_loaded_no_du = list(dict.fromkeys(list_of_sites_loaded))
                     self.dlg.comboBox_4.addItems(list_of_sites_loaded)
-
         except:
             warning_text = "Please select an environmental layer! "
             self.dlg.textBrowser_2.append(warning_text)
-
 
     def load_env_shp_search_tab(self):
         try:
@@ -458,21 +451,18 @@ class SaveAttributes:
                 canvas.setExtent(extent)
                 self.iface.mapCanvas().refresh()
                 self.dlg.textBrowser_6.append(layer_name + " already exists!")
-                AllItems = [self.dlg.comboBox_4.itemText(i) for i in range(self.dlg.comboBox_4.count())]
-                if layer_name not in AllItems:
+                all_items = [self.dlg.comboBox_4.itemText(i) for i in range(self.dlg.comboBox_4.count())]
+                if layer_name not in all_items:
                     list_of_sites_loaded = []
                     list_of_sites_loaded.append(layer_name)
                     # list_of_sites_loaded_no_du = list(dict.fromkeys(list_of_sites_loaded))
                     self.dlg.comboBox_4.addItems(list_of_sites_loaded)
-
         except:
             warning_text = "Please select an environmental layer! "
             self.dlg.textBrowser_6.append(warning_text)
 
-
-
     def display_buff_on_maps(self):
-        #self.dlg.comboBox_5.clear()
+        # self.dlg.comboBox_5.clear()
         buffer_distance = self.dlg.spinBox.value()
         unit = str(self.dlg.comboBox.currentText())
         site_name = str(self.dlg.comboBox_2.currentText())
@@ -497,10 +487,8 @@ class SaveAttributes:
                 buff = geom.buffer(buffer_distance, 5)
                 feat.setGeometry(buff)
             writer.addFeature(feat)
-
-
-            #QgsProject.instance().addMapLayer(outFn)
-            #QgsProject.instance().addMapLayer(layer)
+            # QgsProject.instance().addMapLayer(outFn)
+            # QgsProject.instance().addMapLayer(layer)
             del writer
 
             file_name = str(Path(output_path).name.split('.')[0])
@@ -534,74 +522,73 @@ class SaveAttributes:
                 self.iface.mapCanvas().refresh()
                 text_0 = file_name + " already exists!"
                 self.dlg.textBrowser_5.append(text_0)
-                AllItems = [self.dlg.comboBox_5.itemText(i) for i in range(self.dlg.comboBox_5.count())]
-                if file_name not in AllItems:
+                all_items = [self.dlg.comboBox_5.itemText(i) for i in range(self.dlg.comboBox_5.count())]
+                if file_name not in all_items:
                     list_of_sites_loaded = []
                     list_of_sites_loaded.append(file_name)
                     self.dlg.comboBox_5.addItems(list_of_sites_loaded)
 
             # get all layers
-            #layers = QgsProject.instance().mapLayers()
-            #list_of_layers = []
-            #for layer in layers.values():
+            # layers = QgsProject.instance().mapLayers()
+            # list_of_layers = []
+            # for layer in layers.values():
             #    list_of_layers.append(layer.name())
-            #list_of_sites_loaded = []
-            #if file_name in list_of_layers:
+            # list_of_sites_loaded = []
+            # if file_name in list_of_layers:
             #    list_of_sites_loaded.append(file_name)
-            #self.dlg.comboBox_5.addItems(list_of_sites_loaded)
+            # self.dlg.comboBox_5.addItems(list_of_sites_loaded)
         except:
             text = "Please load the selected development site to the map!"
             self.dlg.textBrowser_5.append(text)
-        #third_tab_dev_list = []
+        # third_tab_dev_list = []
 
-        #buffer_layer_loaded = []
-        #if file_name not in list_of_layers:
+        # buffer_layer_loaded = []
+        # if file_name not in list_of_layers:
         #    buffer_layer_loaded = []
         #    buffer_layer_loaded.append(file_name)
         #    self.dlg.comboBox_5.addItems(buffer_layer_loaded)
         #    self.dlg.lineEdit_10.setText(str(buffer_layer_loaded))
 
         # get list of sites
-        #conn = psycopg2.connect(
+        # conn = psycopg2.connect(
         #        host="localhost",
         #        port=5432,
         #        dbname="postgis_dt",
         #        user="postgres",
         #        password="Jr19951123"
         #        )
-        #cur = conn.cursor()
-        #cur.execute("""select * from dt.site;""")
-        #sites = cur.fetchall()
-        #list_of_sites = []
-        #for site in sites:
+        # cur = conn.cursor()
+        # cur.execute("""select * from dt.site;""")
+        # sites = cur.fetchall()
+        # list_of_sites = []
+        # for site in sites:
         #    list_of_sites.append(site[1])
-        #conn.commit()
+        # conn.commit()
 
         # find common elements from two lists
-        #dev_site = list(set(list_of_sites).intersection(list_of_layers))
+        # dev_site = list(set(list_of_sites).intersection(list_of_layers))
 
-        #for i in dev_site:
+        # for i in dev_site:
         #    third_tab_dev_list.append(i)
-        #for j in buffer_layer_loaded:
+        # for j in buffer_layer_loaded:
         #    third_tab_dev_list.append(j)
-
-
         # add common elements in the comboBox
-        #self.dlg.comboBox_5.addItems(buffer_layer_loaded)
-        #self.dlg.lineEdit_10.setText(str(buffer_layer_loaded))
+        # self.dlg.comboBox_5.addItems(buffer_layer_loaded)
+        # self.dlg.lineEdit_10.setText(str(buffer_layer_loaded))
 
+    # the function below is no longer used for the EIA plugin
     def save_as_map(self):
         layout_name = self.dlg.lineEdit.text()
-        output_path_map = self.dlg.lineEdit_12.text()
+        # output_path_map = self.dlg.lineEdit_12.text()
 
         # make a map
         site_name = str(self.dlg.comboBox_2.currentText())
         layers1 = QgsProject.instance().mapLayersByName(site_name)
-        #layers1 = QgsProject.instance().mapLayersByName('UCL Main Campus')
+        # layers1 = QgsProject.instance().mapLayersByName('UCL Main Campus')
         layer1 = layers1[0]
 
         layer_name = str(self.dlg.listWidget.currentItem().text())
-        #layers2 = QgsProject.instance().mapLayersByName('Listed_Building')
+        # layers2 = QgsProject.instance().mapLayersByName('Listed_Building')
         layers2 = QgsProject.instance().mapLayersByName(layer_name)
         layer2 = layers2[0]
 
@@ -654,6 +641,7 @@ class SaveAttributes:
         # exporter = QgsLayoutExporter(layout)
         # exporter.exportToPdf(output_path_map,
         #                     QgsLayoutExporter.PdfExportSettings())
+
     def insert_buffer_into_db(self):
         # add a field and value
         try:
@@ -679,7 +667,6 @@ class SaveAttributes:
             dev_site_name = str(self.dlg.lineEdit_8.text())
             buffer_distance = self.dlg.spinBox.value()
             unit = str(self.dlg.comboBox.currentText())
-
 
             atts_list = [{dev_site_idx: dev_site_name}, {buff_idx: buffer_distance}, {unit_idx: unit}]
 
@@ -746,7 +733,6 @@ class SaveAttributes:
         text = buffer_name + " Deleted! Please click refresh to reload the buffer."
         self.dlg.textBrowser_5.append(text)
 
-
     def load_pre_existing_buffer(self):
         buffer_information_str = str(self.dlg.listWidget_3.currentItem().text())
         buffer_information_dic = yaml.load(buffer_information_str)
@@ -786,15 +772,13 @@ class SaveAttributes:
             self.iface.mapCanvas().refresh()
             text2 = buffer_name + " already exists! "
             self.dlg.textBrowser_5.append(text2)
-            AllItems = [self.dlg.comboBox_5.itemText(i) for i in range(self.dlg.comboBox_5.count())]
-            if buffer_name not in AllItems:
+            all_items = [self.dlg.comboBox_5.itemText(i) for i in range(self.dlg.comboBox_5.count())]
+            if buffer_name not in all_items:
                 list_of_sites_loaded = []
                 list_of_sites_loaded.append(buffer_name)
                 self.dlg.comboBox_5.addItems(list_of_sites_loaded)
 
-
     def refresh_buffer_layers(self):
-        #-------------------------------
         # list all pre_stored buffered zones
         self.dlg.listWidget_3.clear()
         site_name = str(self.dlg.comboBox_2.currentText())
@@ -822,11 +806,10 @@ class SaveAttributes:
                       'Buffer distance': i[3],
                       'Unit': i[4],
                       'Layer name': i[5],
-                     'Timestamp': str(i[7])}
+                      'Timestamp': str(i[7])}
             buffer_layer.append([dic[i]])
 
         conn.commit()
-
 
         for layer in buffer_layer:
             self.dlg.listWidget_3.addItem(str(layer[0]))
@@ -835,7 +818,7 @@ class SaveAttributes:
         filename, _filter = QFileDialog.getSaveFileName(
             self.dlg, "Select   output file ","", '*.shp')
         self.dlg.lineEdit_3.setText(filename)
-        #self.dlg.textBrowser_5.clear()
+        # self.dlg.textBrowser_5.clear()
 
     def select_output_file_map_image(self):
         filename, _filter = QFileDialog.getSaveFileName(
@@ -860,9 +843,8 @@ class SaveAttributes:
         self.dlg.lineEdit_13.setText(filename)
 
     def spatial_analysis(self):
-
-        #load_message = "Loading ... "
-        #self.dlg.lineEdit_4.setText(load_message)
+        # load_message = "Loading ... "
+        # self.dlg.lineEdit_4.setText(load_message)
         env_layer_name = str(self.dlg.comboBox_4.currentText())
         dev_layer_name = str(self.dlg.comboBox_5.currentText())
         env_layer = QgsProject.instance().mapLayersByName(env_layer_name)[0]
@@ -885,7 +867,6 @@ class SaveAttributes:
                 num = f["NUMPOINTS"]
             numerical_result = str(int(num))
             message = "The number of "+env_layer_name+" in "+dev_layer_name+" is "+numerical_result+"."
-
 
         if env_layer.geometryType() == 1:
             method = "Line in Polygon"
@@ -924,7 +905,7 @@ class SaveAttributes:
 
         # Append the result content in the lineEditor
         self.dlg.lineEdit_4.setText(message)
-        #self.dlg.textBrowser.append(message)
+        # self.dlg.textBrowser.append(message)
         # Append the result content in the text browser
         text = {'Dev Site': dev_layer_name,
                 'Env site': env_layer_name,
@@ -950,15 +931,16 @@ class SaveAttributes:
 
         cur2 = conn.cursor()
         if dev_layer_name in list_of_sites:
-            cur2.execute("""insert into 
-        			dt.analysis_result(site_id, dev_site, env_site, method, analysis_result) 
-        			values ((select site_id from dt.site where site_name = '""" + dev_layer_name + """'),'""" + dev_layer_name + """', '""" + env_layer_name
-                        + """', '""" + method + """', """ + numerical_result + """);""")
+            cur2.execute("""insert into dt.analysis_result(site_id, dev_site, env_site, method, analysis_result) 
+            values ((select site_id from dt.site where site_name = '"""
+                         + dev_layer_name + """'),'"""
+                         + dev_layer_name + """', '""" + env_layer_name
+                         + """', '""" + method + """', """ + numerical_result + """);""")
         else:
-            cur2.execute("""insert into 
-        			dt.analysis_result(buffer_result_id, dev_site, env_site, method, analysis_result) 
-        			values ((select buffer_result_id from dt.buffer_result where buffer_name = '""" + dev_layer_name + """'),'""" + dev_layer_name + """', '""" + env_layer_name
-                        + """', '""" + method + """', """ + numerical_result + """);""")
+            cur2.execute("""insert into dt.analysis_result(buffer_result_id, dev_site, env_site, method, analysis_result) 
+            values ((select buffer_result_id from dt.buffer_result where buffer_name = '"""
+                         + dev_layer_name + """'),'""" + dev_layer_name + """', '""" + env_layer_name
+                         + """', '""" + method + """', """ + numerical_result + """);""")
         conn.commit()
 
         self.dlg.lineEdit_10.clear()
@@ -998,13 +980,12 @@ class SaveAttributes:
 #            if extension == '.qpt':
 #                self.dlg.listWidget_2.addItem(filename)
 
-
     def analysis_result_check(self):
         self.dlg.lineEdit_10.setEnabled(True)
         env_layer_name = str(self.dlg.comboBox_4.currentText())
         dev_layer_name = str(self.dlg.comboBox_5.currentText())
-        #dev_layer_name = "UCL Main Campus"
-        #env_layer_name = "Listed_Building2"
+        # dev_layer_name = "UCL Main Campus"
+        # env_layer_name = "Listed_Building2"
         # Finally, Insert the result into the database
         conn = psycopg2.connect(
             host="localhost",
@@ -1015,10 +996,8 @@ class SaveAttributes:
 
         cur = conn.cursor()
 
-        cur.execute("""select dev_site, env_site, method, analysis_result from 
-        			dt.analysis_result 
-        			where dev_site = '""" + dev_layer_name + """' and 
-        			env_site = '""" + env_layer_name + """';""")
+        cur.execute("""select dev_site, env_site, method, analysis_result from dt.analysis_result 
+        where dev_site = '""" + dev_layer_name + """' and env_site = '""" + env_layer_name + """';""")
 
         analysis_result = cur.fetchall()
 
@@ -1032,8 +1011,6 @@ class SaveAttributes:
                 self.dlg.textBrowser_3.append(str({'Dev Site': result[0], 'Env site': result[1], 'Method': result[2],
                                                    'Result': str(result[3])}))
         conn.commit()
-
-
 
     # Python function that do the main work of setting up the print layout
     # The code in the function can work stand alone if you use the commented variables and edit their values
@@ -1049,7 +1026,7 @@ class SaveAttributes:
         # layout_name = 'NewLayout'
         # title_text = 'New Title'
         layout_name = self.dlg.lineEdit.text()
-        #title_text = self.dlg.lineEdit_2.text()
+        # title_text = self.dlg.lineEdit_2.text()
 
         # Create objects lm = layout manager, l = print layout
         lm = QgsProject.instance().layoutManager()
@@ -1071,15 +1048,14 @@ class SaveAttributes:
         canvas = iface.mapCanvas()
 
         # try:::::
-        #ms = QgsMapSettings()
-        #layers = iface.mapCanvas().layers()
-        #for layer in layers:
+        # ms = QgsMapSettings()
+        # layers = iface.mapCanvas().layers()
+        # for layer in layers:
         #    ms.setLayers(layer)
-        #rect = QgsRectangle(ms.fullExtent())
-        #rect.scale(1.0)
-        #rect = QgsRectangle(canvas.extent())
-        #ms.setExtent(rect)
-
+        # rect = QgsRectangle(ms.fullExtent())
+        # rect.scale(1.0)
+        # rect = QgsRectangle(canvas.extent())
+        # ms.setExtent(rect)
 
         # Get current canvas extent and apply that to all maps (items) in layout
         # Replace any text "{{title}}" in any layout label with the dialog Title text
@@ -1087,7 +1063,7 @@ class SaveAttributes:
         for item in l.items():
             if item.type() == 65639:  # Map
                 item.zoomToExtent(canvas.extent())
-            #if item.type() == 65641:  # Label
+            # if item.type() == 65641:  # Label
             #    item.setText(item.text().replace('{{PROJECT TITLE}}', title_text))
 
         try:
@@ -1113,32 +1089,27 @@ class SaveAttributes:
             author_name.setText("Drawn By: " + author)
         except:
             pass
-
-
         legend = QgsLayoutItemLegend(l)
-
         legend.setTitle("")
         legend.setBackgroundColor(QColor(255, 255, 255, 1))
         legend.setLegendFilterByMapEnabled(True)
         legend.refresh()
-        #layerTree = QgsLayerTree()
-        #layers = iface.mapCanvas().layers()
-        #for layer in layers:
+        # layerTree = QgsLayerTree()
+        # layers = iface.mapCanvas().layers()
+        # for layer in layers:
         #    layerTree.addLayer(layer)
-        #legend.model().setRootGroup(layerTree)
+        # legend.model().setRootGroup(layerTree)
 
-        ##############################################
-        # below codes are copied from https://gis.stackexchange.com/questions/310483/pyqgis-print-layout-legend-setlegendfilterbymapenabled
-
-        #checked_lyrs = [l.name() for l in QgsProject().instance().layerTreeRoot().children() if l.isVisible()]
+        # below codes are copied from
+        # https://gis.stackexchange.com/questions/310483/pyqgis-print-layout-legend-setlegendfilterbymapenabled
+        # checked_lyrs = [l.name() for l in QgsProject().instance().layerTreeRoot().children() if l.isVisible()]
         # get map layer objects of checked layers by matching their names and store those in a list
-        #lyrsToAdd = [l for l in QgsProject().instance().mapLayers().values() if l.name() in checked_lyrs]
-        #root = QgsLayerTree()
-        #for lyr in lyrsToAdd:
-            # add layer objects to the layer tree
+        # lyrsToAdd = [l for l in QgsProject().instance().mapLayers().values() if l.name() in checked_lyrs]
+        # root = QgsLayerTree()
+        # for lyr in lyrsToAdd:
+        #    add layer objects to the layer tree
         #    root.addLayer(lyr)
-        #legend.model().setRootGroup(root)
-
+        # legend.model().setRootGroup(root)
 
         l.addLayoutItem(legend)
         legend.attemptMove(QgsLayoutPoint(355, 15, QgsUnitTypes.LayoutMillimeters))
@@ -1181,15 +1152,14 @@ class SaveAttributes:
 
     # Does a layout already exist
     def layout_exists(self, layout_name):
-    	  lm = QgsProject.instance().layoutManager()
-    	  layouts = []
-    	  for l in lm.layouts():
-    	  	  layouts.append(l.name())
-    	  if layout_name in layouts:
-    	     return sum(layout_name in s for s in layouts)
-    	  else:
-    	     return 0
-
+        lm = QgsProject.instance().layoutManager()
+        layouts = []
+        for l in lm.layouts():
+            layouts.append(l.name())
+        if layout_name in layouts:
+            return sum(layout_name in s for s in layouts)
+        else:
+            return 0
 
     def print_layout(self):
         try:
@@ -1202,7 +1172,6 @@ class SaveAttributes:
             layout_name = 'Layout'
 
         # Add function to test the layout name so that it doesn't exist. If it does handle the exception
-
         map_title = self.dlg.lineEdit_2.text()
         profile_dir = QgsApplication.qgisSettingsDirPath()
         # create the template item selected full path (assuming extension is lower case)
@@ -1242,8 +1211,7 @@ class SaveAttributes:
         self.dlg.lineEdit_2.clear()
         self.dlg.lineEdit_5.clear()
         self.dlg.lineEdit_6.clear()
-        #self.dlg.lineEdit_2.setFocus()
-
+        # self.dlg.lineEdit_2.setFocus()
 
     def save_result(self):
         import csv
@@ -1260,7 +1228,6 @@ class SaveAttributes:
                     line_dic = literal_eval(line)
                     writer.writerow(line_dic)
         self.dlg.textBrowser.append("Saved as a CSV file !")
-
 
     def tab_4_load_selected_layers(self):
         self.dlg.listWidget_4.clear()
@@ -1291,51 +1258,39 @@ class SaveAttributes:
             if i not in list_of_layers_selected:
                 QgsProject.instance().removeMapLayer(QgsProject.instance().mapLayersByName(i)[0])
 
-        #layer_name = str(self.dlg.listWidget_4.currentItem().text())
-        #layer_to_remove = QgsProject.instance().mapLayersByName(layer_name)[0]
-        #QgsProject.instance().removeMapLayer(layer_to_remove)
-        #self.dlg.listWidget_4.clear()
-        #layers = QgsProject.instance().mapLayers()
-        #list_of_layers = []
-        #for layer in layers.values():
+        # layer_name = str(self.dlg.listWidget_4.currentItem().text())
+        # layer_to_remove = QgsProject.instance().mapLayersByName(layer_name)[0]
+        # QgsProject.instance().removeMapLayer(layer_to_remove)
+        # self.dlg.listWidget_4.clear()
+        # layers = QgsProject.instance().mapLayers()
+        # list_of_layers = []
+        # for layer in layers.values():
         #    list_of_layers.append(layer.name())
-        #for i in list_of_layers:
+        # for i in list_of_layers:
         #    self.dlg.listWidget_4.addItem(i)
 
     def search_for_layers(self):
         self.dlg.listWidget_5.clear()
-
         keyword = self.dlg.lineEdit_11.text()
-        #keyword = "flood"
         conn = psycopg2.connect(
             host="localhost",
             port=5432,
             dbname="postgis_dt",
             user="postgres",
             password="Jr19951123")
-
         cur = conn.cursor()
-
         cur.execute("""select layer_name from dt.layer where layer_name ~* '""" + keyword + """' order by layer_name;""")
-
         layers = cur.fetchall()
-
         list_of_all_layers = []
-
         for layer in layers:
             list_of_all_layers.append(layer[0])
-
         conn.commit()
-
         for i in list_of_all_layers:
             self.dlg.listWidget_5.addItem(i)
-
-
 
     def run(self):
         """Run method that performs all the real work"""
         # connect to the database
-
         conn = psycopg2.connect(
                 host="localhost",
                 port=5432,
@@ -1344,9 +1299,7 @@ class SaveAttributes:
                 password="Jr19951123"
                 )
         # ## 2. Execute query
-
         # ### 2.1 List all topics
-
         # site
         cur = conn.cursor()
         cur.execute("""select * from dt.site;""")
@@ -1362,9 +1315,9 @@ class SaveAttributes:
         # Only create GUI ONCE in callback, so that it will only load when the plugin is started
         if self.first_start == True:
             self.first_start = False
-            #self.dlg = connect_to_database()
+            # self.dlg = connect_to_database()
             self.dlg = SaveAttributesDialog()
-          #  self.dlg.pushButton_2.clicked.connect(self.list_all_sites)
+            # self.dlg.pushButton_2.clicked.connect(self.list_all_sites)
             self.dlg.pushButton_4.clicked.connect(self.list_all_related_topics)
             self.dlg.pushButton_3.clicked.connect(self.list_all_related_layers)
             self.dlg.pushButton_8.clicked.connect(self.load_site_shp)
@@ -1374,12 +1327,12 @@ class SaveAttributes:
             self.dlg.pushButton_10.clicked.connect(self.insert_buffer_into_db)
             self.dlg.pushButton_18.clicked.connect(self.delete_buffer_from_db)
             self.dlg.pushButton_12.clicked.connect(self.refresh_buffer_layers)
-           # self.dlg.pushButton.clicked.connect(self.select_output_file)
+            # self.dlg.pushButton.clicked.connect(self.select_output_file)
             self.dlg.pushButton_6.clicked.connect(self.select_output_file)
             self.dlg.pushButton_14.clicked.connect(self.select_output_file_map_pdf)
             # self.dlg.pushButton_7.clicked.connect(self.save_as_map)
             self.dlg.pushButton_13.clicked.connect(self.select_output_file_analysis)
-            #self.dlg.pushButton_15.clicked.connect(self.add_templates)
+            # self.dlg.pushButton_15.clicked.connect(self.add_templates)
             self.dlg.pushButton_7.clicked.connect(self.print_layout)
             self.dlg.pushButton_16.clicked.connect(self.save_map_pdf)
             self.dlg.pushButton_5.clicked.connect(self.save_result)
@@ -1393,25 +1346,22 @@ class SaveAttributes:
 
         self.dlg.setWindowTitle('Automation Tool for EIA mapping output')
         self.dlg.setGeometry(500, 250, 1000, 500)
-
         # Fetch the currently loaded layers
         layers = QgsProject.instance().layerTreeRoot().children()
         map_layers = QgsProject.instance().mapLayers()
         list_of_layers = []
         for layer in map_layers.values():
             list_of_layers.append(layer.name())
-		# Clear the contents of the comboBox from previous runs
+        # Clear the contents of the comboBox from previous runs
         self.dlg.comboBox_2.clear()
         self.dlg.comboBox_4.clear()
         self.dlg.comboBox_5.clear()
-		# Populate the comboBox with names of all the loaded layers
-		# Populate the comboBox with names of all the loaded layers
-        #  self.dlg.comboBox.addItems([layer.name() for layer in layers])
+        # Populate the comboBox with names of all the loaded layers
+        # Populate the comboBox with names of all the loaded layers
+        # self.dlg.comboBox.addItems([layer.name() for layer in layers])
         self.dlg.comboBox_2.addItems(list_of_sites)
-        #self.dlg.comboBox_4.addItems(list_of_layers)
-        #self.dlg.comboBox_5.addItems(list_of_layers)
-
-
+        # self.dlg.comboBox_4.addItems(list_of_layers)
+        # self.dlg.comboBox_5.addItems(list_of_layers)
 
         list_of_units = ['metres', 'kilometres','feet','miles']
         self.dlg.comboBox.clear()
@@ -1420,7 +1370,6 @@ class SaveAttributes:
         #  self.dlg.comboBox.addItems([layer.name() for layer in layers])
         self.dlg.comboBox.addItems(list_of_units)
 
-        #-------------------------------
         # list all pre_stored env layers
         self.dlg.listWidget_5.clear()
         conn = psycopg2.connect(
@@ -1429,7 +1378,6 @@ class SaveAttributes:
             dbname="postgis_dt",
             user="postgres",
             password="Jr19951123")
-
         cur = conn.cursor()
 
         cur.execute("""select layer_name from dt.layer order by layer_name;""")
@@ -1446,7 +1394,6 @@ class SaveAttributes:
         for i in list_of_all_layers:
             self.dlg.listWidget_5.addItem(i)
 
-        #-------------------------------
         # list all pre_stored buffered zones
         self.dlg.listWidget_3.clear()
         # connect to the database
@@ -1459,14 +1406,12 @@ class SaveAttributes:
         )
 
         cur = conn.cursor()
-
         cur.execute("""select * from dt.buffer_result order by dev_site, unit, buffer_distance, auto_date;""")
         buffer_result = cur.fetchall()
         buffer_layer = []
 
         dic = {}
         for i in buffer_result:
-
             dic[i] = {'ID': i[0],
                       'Site': i[2],
                       'Buffer distance': i[3],
@@ -1474,15 +1419,11 @@ class SaveAttributes:
                       'Layer name': i[5],
                       'Timestamp': str(i[7])}
             buffer_layer.append([dic[i]])
-
         conn.commit()
 
         for layer in buffer_layer:
             self.dlg.listWidget_3.addItem(str(layer[0]))
 
-
-
-        # -------------------------------------------------------------
         # add and load templates
         # Paths to source files and qgis profile directory
         source_profile = os.path.join(self.plugin_dir, 'profile')
@@ -1508,18 +1449,15 @@ class SaveAttributes:
             filename, extension = os.path.splitext(template)
             if extension == '.qpt':
                 self.dlg.listWidget_2.addItem(filename)
-        #---------------------------------------------------------------------
+
+        # --------------------------------------------------------------------
 
         site_name_default = "Please select a development site from Load Data by Topic Tab."
         self.dlg.lineEdit_8.setText(site_name_default)
         self.dlg.spinBox.setEnabled(False)
         self.dlg.lineEdit_3.setEnabled(False)
-
-
         # show the dialog
         self.dlg.show()
-
-
         # Run the dialog event loop
         result = self.dlg.exec_()
         # See if OK was pressed
