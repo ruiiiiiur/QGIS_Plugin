@@ -223,13 +223,23 @@ class SaveAttributes:
         self.dlg.lineEdit_3.setEnabled(True)
         site_name = str(self.dlg.comboBox_2.currentText())
         # connect to the database
-        conn = psycopg2.connect(
+        try:
+            conn = psycopg2.connect(
                 host="localhost",
                 port=5432,
                 dbname="postgis_dt",
                 user="postgres",
                 password="Jr19951123"
-                )
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
+
         cur = conn.cursor()
         cur.execute("""select c.site_name,b.topic_name 
         from dt.site c 
@@ -256,13 +266,22 @@ class SaveAttributes:
 
         # list all pre_stored buffered zones
         # connect to the database
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123"
-        )
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
 
         cur = conn.cursor()
 
@@ -295,13 +314,22 @@ class SaveAttributes:
     def list_all_related_layers(self):
         topic_name = str(self.dlg.comboBox_3.currentText())
         # connect to the database
-        conn = psycopg2.connect(
+        try:
+            conn = psycopg2.connect(
                 host="localhost",
                 port=5432,
                 dbname="postgis_dt",
                 user="postgres",
                 password="Jr19951123"
-                )
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
         cur = conn.cursor()
 
         cur.execute("""select a.topic_name,b.layer_name 
@@ -682,13 +710,22 @@ class SaveAttributes:
                 geom_string = geom.asWkt()
 
             # insert into database
-
-            conn = psycopg2.connect(
-                host="localhost",
-                port=5432,
-                dbname="postgis_dt",
-                user="postgres",
-                password="Jr19951123")
+            try:
+                conn = psycopg2.connect(
+                    host="localhost",
+                    port=5432,
+                    dbname="postgis_dt",
+                    user="postgres",
+                    password="Jr19951123"
+                )
+            except:
+                conn = psycopg2.connect(
+                    host="developer.cege.ucl.ac.uk",
+                    port=33029,
+                    dbname="user20db",
+                    user="user20",
+                    password="Jr19951123"
+                )
             cur = conn.cursor()
 
             cur.execute("""insert into 
@@ -720,12 +757,22 @@ class SaveAttributes:
         buffer_id = buffer_information_dic["ID"]
         buffer_name = buffer_information_dic["Layer name"]
         # delete from database
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123")
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
         cur = conn.cursor()
 
         cur.execute("""delete from dt.buffer_result where buffer_result_id = """ + str(buffer_id) + """;""")
@@ -784,13 +831,22 @@ class SaveAttributes:
         site_name = str(self.dlg.comboBox_2.currentText())
         # list all pre_stored buffered zones
         # connect to the database
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123"
-        )
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
 
         cur = conn.cursor()
 
@@ -914,12 +970,22 @@ class SaveAttributes:
         self.dlg.textBrowser_3.append(str(text))
 
         # Finally, Insert the result into the database
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123")
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
 
         cur1 = conn.cursor()
         cur1.execute("""select * from dt.site;""")
@@ -987,12 +1053,22 @@ class SaveAttributes:
         # dev_layer_name = "UCL Main Campus"
         # env_layer_name = "Listed_Building2"
         # Finally, Insert the result into the database
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123")
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
 
         cur = conn.cursor()
 
@@ -1272,12 +1348,22 @@ class SaveAttributes:
     def search_for_layers(self):
         self.dlg.listWidget_5.clear()
         keyword = self.dlg.lineEdit_11.text()
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123")
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
         cur = conn.cursor()
         cur.execute("""select layer_name from dt.layer where layer_name ~* '""" + keyword + """' order by layer_name;""")
         layers = cur.fetchall()
@@ -1291,13 +1377,22 @@ class SaveAttributes:
     def run(self):
         """Run method that performs all the real work"""
         # connect to the database
-        conn = psycopg2.connect(
+        try:
+            conn = psycopg2.connect(
                 host="localhost",
                 port=5432,
                 dbname="postgis_dt",
                 user="postgres",
                 password="Jr19951123"
-                )
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
         # ## 2. Execute query
         # ### 2.1 List all topics
         # site
@@ -1372,12 +1467,22 @@ class SaveAttributes:
 
         # list all pre_stored env layers
         self.dlg.listWidget_5.clear()
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123")
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
         cur = conn.cursor()
 
         cur.execute("""select layer_name from dt.layer order by layer_name;""")
@@ -1397,13 +1502,22 @@ class SaveAttributes:
         # list all pre_stored buffered zones
         self.dlg.listWidget_3.clear()
         # connect to the database
-        conn = psycopg2.connect(
-            host="localhost",
-            port=5432,
-            dbname="postgis_dt",
-            user="postgres",
-            password="Jr19951123"
-        )
+        try:
+            conn = psycopg2.connect(
+                host="localhost",
+                port=5432,
+                dbname="postgis_dt",
+                user="postgres",
+                password="Jr19951123"
+            )
+        except:
+            conn = psycopg2.connect(
+                host="developer.cege.ucl.ac.uk",
+                port=33029,
+                dbname="user20db",
+                user="user20",
+                password="Jr19951123"
+            )
 
         cur = conn.cursor()
         cur.execute("""select * from dt.buffer_result order by dev_site, unit, buffer_distance, auto_date;""")
